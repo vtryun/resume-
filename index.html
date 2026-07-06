@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>李云亮 — 前端/全栈开发</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       DESIGN SYSTEM
+       ============================================ */
+    :root {
+      --bg: #fafafa;
+      --bg-elevated: #ffffff;
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-muted: #86868b;
+      --accent: #0071e3;
+      --accent-hover: #0077ED;
+      --border: #e8e8ed;
+      --surface: #f5f5f7;
+      --tag-bg: #f0f0f3;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --radius-tag: 8px;
+      --max-width: 980px;
+      --section-gap: 140px;
+    }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.65;
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+    }
+
+    /* ============================================
+       NAVIGATION
+       ============================================ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(250, 250, 250, 0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* ============================================
+       LAYOUT
+       ============================================ */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding-top: var(--section-gap);
+      padding-bottom: 0;
+    }
+
+    /* ============================================
+       HERO SECTION
+       ============================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 52px;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .hero-name {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(56px, 8vw, 96px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.9s ease forwards;
+      animation-delay: 0.35s;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(20px, 2.8vw, 28px);
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 560px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.55s;
+    }
+
+    .hero-contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.7s;
+    }
+
+    .hero-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .hero-contact-item svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: var(--text-muted);
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 1.2s;
+    }
+
+    .hero-scroll-hint span {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: var(--text-muted);
+      animation: scrollPulse 2s ease-in-out infinite;
+      transform-origin: top;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { transform: scaleY(0.4); opacity: 0.3; }
+      50% { transform: scaleY(1); opacity: 1; }
+    }
+
+    /* ============================================
+       SECTION HEADERS
+       ============================================ */
+    .section-header {
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+
+    .section-desc {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin-top: 16px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ============================================
+       ADVANTAGES (个人优势)
+       ============================================ */
+    .advantages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .advantage-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 30px;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .advantage-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .advantage-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .advantage-icon--blue {
+      background: linear-gradient(135deg, #e8f2ff, #d0e4ff);
+      color: #0071e3;
+    }
+
+    .advantage-icon--green {
+      background: linear-gradient(135deg, #e6f9ed, #c6f0d4);
+      color: #28a745;
+    }
+
+    .advantage-icon--orange {
+      background: linear-gradient(135deg, #fff4e6, #ffe4c0);
+      color: #e67e22;
+    }
+
+    .advantage-card h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .advantage-card p {
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ============================================
+       SKILLS (技术栈)
+       ============================================ */
+    .skills-section {
+      background: var(--text-primary);
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+      padding: var(--section-gap) calc(50vw - 50% + 24px);
+      position: relative;
+    }
+
+    .skills-section .section-label {
+      color: #64b5f6;
+    }
+
+    .skills-section .section-title {
+      color: #f5f5f7;
+    }
+
+    .skills-section .section-desc {
+      color: #a1a1a6;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 0;
+    }
+
+    .skill-group h4 {
+      font-family: 'Sora', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #86868b;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      font-size: 13.5px;
+      color: #d2d2d7;
+      transition: all 0.25s ease;
+      cursor: default;
+    }
+
+    .skill-tag:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.15);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* ============================================
+       PROJECTS
+       ============================================ */
+    .project-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .project-card-body {
+      padding: 40px 36px;
+    }
+
+    .project-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      background: linear-gradient(135deg, #e8f2ff, #d0e4ff);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 20px;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .project-card h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .project-card .project-desc {
+      font-size: 15.5px;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .project-tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .project-tech-tag {
+      padding: 5px 12px;
+      background: var(--tag-bg);
+      border-radius: var(--radius-tag);
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .project-responsibilities {
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-responsibilities h4 {
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .project-responsibilities ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .project-responsibilities li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .project-responsibilities li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.6;
+    }
+
+    /* ============================================
+       EDUCATION
+       ============================================ */
+    .edu-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .edu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .edu-main h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .edu-meta {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .edu-date {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .edu-detail {
+      padding-left: 40px;
+      border-left: 1px solid var(--border);
+    }
+
+    .edu-detail h4 {
+      font-family: 'Sora', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .edu-detail p {
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* ============================================
+       CERTIFICATES
+       ============================================ */
+    .cert-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cert-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 60px;
+      font-size: 14.5px;
+      color: var(--text-primary);
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+
+    .cert-chip:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .cert-chip svg {
+      width: 18px;
+      height: 18px;
+      color: var(--accent);
+    }
+
+    /* ============================================
+       CONTACT / FOOTER
+       ============================================ */
+    .contact-section {
+      text-align: center;
+      padding-bottom: var(--section-gap);
+    }
+
+    .contact-section .section-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .contact-section .section-desc {
+      text-align: center;
+    }
+
+    .contact-grid {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 0;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 28px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 60px;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+
+    .contact-card svg {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .contact-card span {
+      font-size: 14.5px;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ============================================
+       SCROLL REVEAL ANIMATIONS
+       ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ============================================
+       KEYFRAMES
+       ============================================ */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      :root {
+        --section-gap: 80px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .advantages-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .edu-card {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .edu-detail {
+        padding-left: 0;
+        border-left: none;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+      }
+
+      .project-card-body {
+        padding: 28px 24px;
+      }
+
+      .contact-card {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .advantages-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .advantages-grid .advantage-card:last-child {
+        grid-column: span 2;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <div class="nav-logo">云亮</div>
+      <ul class="nav-links">
+        <li><a href="#advantages">优势</a></li>
+        <li><a href="#skills">技术栈</a></li>
+        <li><a href="#projects">项目</a></li>
+        <li><a href="#education">教育</a></li>
+        <li><a href="#contact">联系</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <p class="hero-eyebrow">前端 / 全栈开发工程师</p>
+      <h1 class="hero-name">李云亮</h1>
+      <p class="hero-subtitle">
+        22 岁，全栈开发，热爱用代码构建优雅的产品体验。<br>
+        擅长 React 生态与 Java 后端，注重工程化与代码品质。
+      </p>
+      <div class="hero-contact-row">
+        <div class="hero-contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+          <span>2092826454@qq.com</span>
+        </div>
+        <div class="hero-contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <span>183 7074 1108</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ========== ADVANTAGES ========== -->
+  <section id="advantages">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">个人优势</p>
+        <h2 class="section-title">专注品质，<br>高效交付。</h2>
+      </div>
+      <div class="advantages-grid">
+        <div class="advantage-card reveal reveal-delay-1">
+          <div class="advantage-icon advantage-icon--blue">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3>全栈开发能力</h3>
+          <p>熟练掌握 React、Vue 前端生态与 Java SpringBoot 后端架构，具备从需求分析到上线交付的完整开发能力。</p>
+        </div>
+        <div class="advantage-card reveal reveal-delay-2">
+          <div class="advantage-icon advantage-icon--green">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>工程化思维</h3>
+          <p>重视 TypeScript 类型安全、代码整洁度与可维护性，坚持工程规范，编写高质量、可复用的业务代码。</p>
+        </div>
+        <div class="advantage-card reveal reveal-delay-3">
+          <div class="advantage-icon advantage-icon--orange">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3>快速学习与落地</h3>
+          <p>学习适配能力突出，可快速上手新技术并落地业务实践，擅长团队协同，熟悉敏捷开发与迭代交付流程。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SKILLS ========== -->
+  <section class="skills-section" id="skills">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">技术栈</p>
+        <h2 class="section-title">现代化技术，<br>全链路覆盖。</h2>
+        <p class="section-desc">从前端交互到后端服务，从数据库设计到工程部署，构建完整的技术能力矩阵。</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-group reveal reveal-delay-1">
+          <h4>Frontend</h4>
+          <div class="skill-tags">
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">Vue</span>
+            <span class="skill-tag">Next.js</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">Tailwind CSS</span>
+            <span class="skill-tag">MUI</span>
+          </div>
+        </div>
+        <div class="skill-group reveal reveal-delay-2">
+          <h4>Backend</h4>
+          <div class="skill-tags">
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">Spring Boot</span>
+            <span class="skill-tag">Spring Security</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Node.js</span>
+          </div>
+        </div>
+        <div class="skill-group reveal reveal-delay-3">
+          <h4>Database & Tools</h4>
+          <div class="skill-tags">
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">SQLite</span>
+            <span class="skill-tag">Redis</span>
+            <span class="skill-tag">Git</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROJECTS ========== -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">项目经历</p>
+        <h2 class="section-title">用技术解决<br>真实问题。</h2>
+      </div>
+
+      <!-- Project 1 -->
+      <div class="project-card reveal">
+        <div class="project-card-body">
+          <span class="project-badge">全栈项目</span>
+          <h3>校园活动平台</h3>
+          <p class="project-desc">
+            面向校园场景的活动发现、报名与管理平台，支持多角色（普通用户 / 主办方 / 管理员）协作，实现完整的活动生命周期管理。
+          </p>
+          <div class="project-tech-stack">
+            <span class="project-tech-tag">React</span>
+            <span class="project-tech-tag">TanStack Router</span>
+            <span class="project-tech-tag">Java</span>
+            <span class="project-tech-tag">Spring Boot</span>
+            <span class="project-tech-tag">Spring Security</span>
+            <span class="project-tech-tag">Spring Data JPA</span>
+            <span class="project-tech-tag">Redis</span>
+          </div>
+          <div class="project-responsibilities">
+            <h4>核心职责</h4>
+            <ul>
+              <li>基于用户角色体系，通过布局路由守卫实现细粒度的页面级权限控制</li>
+              <li>使用 TanStack Router 的 loader 和动态路由，根据权限动态加载可访问的路由模块</li>
+              <li>利用 TanStack Router 的布局路由和 beforeLoad 钩子，根据用户角色进行路由守卫拦截</li>
+              <li>对 Axios 进行二次封装，在请求和响应拦截器中统一处理登录态、错误提示与 Token 刷新</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EDUCATION ========== -->
+  <section id="education">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">教育经历</p>
+        <h2 class="section-title">持续学习，<br>不断成长。</h2>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-main">
+          <h3>萍乡学院</h3>
+          <p class="edu-meta">本科 · 软件工程</p>
+          <p class="edu-date">2022 — 2026</p>
+        </div>
+        <div class="edu-detail">
+          <h4>实践经历</h4>
+          <p>
+            大二期间加入学院专项实训培训班，在博士导师指导下开展为期一年的数据结构与前端开发系统化学习。2025 年参与学院人事管理系统开发并落地上线，项目基于 Node.js + React 技术栈搭建，主要承担系统页面功能开发与通用组件封装工作。
+          </p>
+        </div>
+      </div>
+
+      <!-- Certificates -->
+      <div style="margin-top: 40px;" class="reveal reveal-delay-1">
+        <div class="cert-row">
+          <div class="cert-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>大学英语四级 CET-4</span>
+          </div>
+          <div class="cert-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <span>驾驶证 C1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">联系方式</p>
+        <h2 class="section-title">期待与你交流。</h2>
+        <p class="section-desc">如果你对我的经历感兴趣，欢迎随时联系我。</p>
+      </div>
+      <div class="contact-grid reveal reveal-delay-1">
+        <a href="mailto:2092826454@qq.com" class="contact-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+          <span>2092826454@qq.com</span>
+        </a>
+        <a href="tel:18370741108" class="contact-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <span>183 7074 1108</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 李云亮 · Built with passion.</p>
+    </div>
+  </footer>
+
+  <!-- ========== SCROLL REVEAL SCRIPT ========== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // Intersection Observer for scroll reveal
+      const revealElements = document.querySelectorAll('.reveal');
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.15,
+          rootMargin: '0px 0px -40px 0px',
+        }
+      );
+
+      revealElements.forEach((el) => observer.observe(el));
+
+      // Smooth active link highlight
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-links a');
+
+      function updateActiveLink() {
+        const scrollY = window.scrollY + 100;
+
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          const sectionId = section.getAttribute('id');
+
+          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            navLinks.forEach((link) => {
+              link.style.color = '';
+              if (link.getAttribute('href') === '#' + sectionId) {
+                link.style.color = 'var(--text-primary)';
+              }
+            });
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveLink, { passive: true });
+      updateActiveLink();
+    })();
+  </script>
+</body>
+</html>
